@@ -56,8 +56,36 @@ void setup() {
 void loop() {
   for (int i = 0; i < NUM_SENSORS; i++) {
     distances[i] = sensors[i].readRangeContinuousMillimeters();
+    // Serial.print("Sensor ");
+    // Serial.print(i);
+    // Serial.print(" (0x");
+    // Serial.print(sensorAddresses[i], HEX);
+    // Serial.print("): ");
+    // Serial.print(distances[i]);
+    // Serial.print(" mm\t");
   }
+  // Serial.println();
   delay(10);
+
+  // sensor0 controls 0, 1, 4, 5
+
+  // sensor1 controls 1, 2, 3, 4
+
+  // sensor2 controls 4, 5, 6, 7
+
+  // sensor3 controls 3, 4, 7, 8
+
+  // sensor4 controls 6, 7, 10, 11
+
+  // sensor5 controls 7, 8, 9, 10
+
+  // sensor6 controls 10, 11, 12, 13
+
+  // sensor7 controls 9, 10, 13, 14
+
+  // sensor8 controls 12, 13, 16, 17
+
+  // sensor9 controls 13, 14, 15, 16
 
   // not in conflict: 0, 2, 15, 17 (corners)
   updateLED(0, distances[0]);
@@ -93,12 +121,13 @@ void updateLED(int index, int distance) {
   targetBrightness = constrain(targetBrightness, 0, 255);
 
   // Smoothly fade to the target brightness
-  if (currentBrightness[index] < targetBrightness) { // Fade in
-    currentBrightness[index] = min(targetBrightness, currentBrightness[index] + 20); 
-  } else if (currentBrightness[index] > targetBrightness) { // Fade out
-    currentBrightness[index] = max(targetBrightness, currentBrightness[index] - 20); 
+  if (currentBrightness[index] < targetBrightness) {
+    currentBrightness[index] = min(targetBrightness, currentBrightness[index] + 20);  // Fade in
+  } else if (currentBrightness[index] > targetBrightness) {
+    currentBrightness[index] = max(targetBrightness, currentBrightness[index] - 20);  // Fade out
   }
 
   int hue = 20; 
   leds[index] = CHSV(hue, 255, currentBrightness[index]);
 }
+
